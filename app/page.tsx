@@ -30,7 +30,12 @@ export default function Home() {
         ? { html } 
         : { url: url.trim() };
         
-      const response = await fetch('/api/convert', {
+      // Use Vercel-compatible endpoint when deployed
+      const apiEndpoint = process.env.NODE_ENV === 'production' 
+        ? '/api/convert-vercel'
+        : '/api/convert';
+        
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

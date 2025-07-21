@@ -10,6 +10,14 @@ export default function Home() {
   const [error, setError] = useState('');
   const [debugInfo, setDebugInfo] = useState('');
 
+  // Get the correct API endpoint and base URL
+  const getApiInfo = () => {
+    const isProduction = process.env.NODE_ENV === 'production';
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000';
+    const endpoint = isProduction ? '/api/v2' : '/api/v1';
+    return { baseUrl, endpoint, fullUrl: `${baseUrl}${endpoint}` };
+  };
+
   const convertToPdf = async () => {
     if (inputType === 'html' && !html.trim()) {
       setError('Please enter HTML content');
@@ -32,8 +40,8 @@ export default function Home() {
         
       // Use Vercel-compatible endpoint when deployed
       const apiEndpoint = process.env.NODE_ENV === 'production' 
-        ? '/api/convert-vercel'
-        : '/api/convert';
+        ? '/api/v2'
+        : '/api/v1';
         
       const response = await fetch(apiEndpoint, {
         method: 'POST',
@@ -107,7 +115,7 @@ export default function Home() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-3">Input Type</label>
               <div className="flex space-x-4">
-                <label className="flex items-center">
+                <label className="flex items-center text-gray-800">
                   <input
                     type="radio"
                     name="inputType"
@@ -118,7 +126,7 @@ export default function Home() {
                   />
                   HTML Content
                 </label>
-                <label className="flex items-center">
+                <label className="flex items-center text-gray-800">
                   <input
                     type="radio"
                     name="inputType"
@@ -172,7 +180,6 @@ export default function Home() {
                   <p className="text-sm font-medium text-gray-700 mb-2">Quick examples:</p>
                   <div className="flex flex-wrap gap-2">
                     {[
-                      'https://example.com',
                       'https://news.ycombinator.com', 
                       'https://github.com/trending',
                       'https://wikipedia.org'
@@ -232,7 +239,14 @@ export default function Home() {
               <div className="space-y-4">
                 <div>
                   <h3 className="font-medium text-gray-900 mb-2">Endpoint:</h3>
-                  <code className="bg-white px-3 py-2 rounded border border-gray-300 text-sm text-gray-800">POST /api/convert</code>
+                  <code className="bg-white px-3 py-2 rounded border border-gray-300 text-sm text-gray-800">
+                    POST {getApiInfo().endpoint}
+                  </code>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {process.env.NODE_ENV === 'production' 
+                      ? 'Using Vercel-optimized endpoint for production deployment' 
+                      : 'Using standard endpoint for local development'}
+                  </p>
                 </div>
 
                 <div>
@@ -242,7 +256,7 @@ export default function Home() {
                       <h4 className="text-sm font-medium text-gray-700 mb-2">HTML Content:</h4>
                       <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                         <pre className="text-sm">
-{`curl -X POST http://localhost:3000/api/convert \\
+{`curl -X POST ${getApiInfo().fullUrl} \\
   -H "Content-Type: application/json" \\
   -d '{"html":"<h1>Hello World</h1>"}' \\
   --output output.pdf`}
@@ -253,7 +267,7 @@ export default function Home() {
                       <h4 className="text-sm font-medium text-gray-700 mb-2">Website URL:</h4>
                       <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                         <pre className="text-sm">
-{`curl -X POST http://localhost:3000/api/convert \\
+{`curl -X POST ${getApiInfo().fullUrl} \\
   -H "Content-Type: application/json" \\
   -d '{"url":"https://example.com"}' \\
   --output webpage.pdf`}

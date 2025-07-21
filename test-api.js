@@ -50,18 +50,18 @@ async function runTests() {
   };
 
   // Test original endpoint
-  const test1 = await testEndpoint('/api/convert', htmlData, 'test-convert-html.pdf');
-  const test2 = await testEndpoint('/api/convert', urlData, 'test-convert-url.pdf');
+  const test1 = await testEndpoint('/api/v1', htmlData, 'test-convert-html.pdf');
+  const test2 = await testEndpoint('/api/v1', urlData, 'test-convert-url.pdf');
 
   // Test Vercel endpoint
-  const test3 = await testEndpoint('/api/convert-vercel', htmlData, 'test-vercel-html.pdf');
-  const test4 = await testEndpoint('/api/convert-vercel', urlData, 'test-vercel-url.pdf');
+  const test3 = await testEndpoint('/api/v2', htmlData, 'test-vercel-html.pdf');
+  const test4 = await testEndpoint('/api/v2', urlData, 'test-vercel-url.pdf');
 
   console.log('\n📊 Test Results Summary:');
-  console.log(`/api/convert (HTML): ${test1 ? '✅ PASS' : '❌ FAIL'}`);
-  console.log(`/api/convert (URL): ${test2 ? '✅ PASS' : '❌ FAIL'}`);
-  console.log(`/api/convert-vercel (HTML): ${test3 ? '✅ PASS' : '❌ FAIL'}`);
-  console.log(`/api/convert-vercel (URL): ${test4 ? '✅ PASS' : '❌ FAIL'}`);
+  console.log(`/api/v1 (HTML): ${test1 ? '✅ PASS' : '❌ FAIL'}`);
+  console.log(`/api/v1 (URL): ${test2 ? '✅ PASS' : '❌ FAIL'}`);
+  console.log(`/api/v2 (HTML): ${test3 ? '✅ PASS' : '❌ FAIL'}`);
+  console.log(`/api/v2 (URL): ${test4 ? '✅ PASS' : '❌ FAIL'}`);
 
   const allPassed = test1 && test2 && test3 && test4;
   console.log(`\n${allPassed ? '🎉 All tests passed!' : '⚠️  Some tests failed'}`);

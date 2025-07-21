@@ -13,17 +13,17 @@ curl http://localhost:3000/api/test
 
 ## Test HTML to PDF conversion:
 ```cmd
-curl -X POST http://localhost:3000/api/convert -H "Content-Type: application/json" -d "{\"html\":\"<h1>Hello World</h1><p>This is a test.</p>\"}" --output html-test.pdf
+curl -X POST http://localhost:3000/api/v1 -H "Content-Type: application/json" -d "{\"html\":\"<h1>Hello World</h1><p>This is a test.</p>\"}" --output html-test.pdf
 ```
 
 ## Test URL to PDF conversion:
 ```cmd
-curl -X POST http://localhost:3000/api/convert -H "Content-Type: application/json" -d "{\"url\":\"https://example.com\"}" --output example.pdf
+curl -X POST http://localhost:3000/api/v1 -H "Content-Type: application/json" -d "{\"url\":\"https://example.com\"}" --output example.pdf
 ```
 
 ## Test more complex website:
 ```cmd
-curl -X POST http://localhost:3000/api/convert -H "Content-Type: application/json" -d "{\"url\":\"https://news.ycombinator.com\"}" --output hackernews.pdf
+curl -X POST http://localhost:3000/api/v1 -H "Content-Type: application/json" -d "{\"url\":\"https://news.ycombinator.com\"}" --output hackernews.pdf
 ```
 
 ## Windows PowerShell alternatives:
@@ -34,7 +34,7 @@ $body = @{
     html = "<h1>Hello World</h1><p>This is a test document.</p>"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri "http://localhost:3000/api/convert" -Method POST -Body $body -ContentType "application/json" -OutFile "test.pdf"
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1" -Method POST -Body $body -ContentType "application/json" -OutFile "test.pdf"
 ```
 
 ### Test URL conversion  
@@ -43,7 +43,7 @@ $body = @{
     url = "https://github.com"
 } | ConvertTo-Json
 
-Invoke-RestMethod -Uri "http://localhost:3000/api/convert" -Method POST -Body $body -ContentType "application/json" -OutFile "github.pdf"
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1" -Method POST -Body $body -ContentType "application/json" -OutFile "github.pdf"
 ```
 
 ### Test URL with options
@@ -57,7 +57,7 @@ $body = @{
     }
 } | ConvertTo-Json -Depth 3
 
-Invoke-RestMethod -Uri "http://localhost:3000/api/convert" -Method POST -Body $body -ContentType "application/json" -OutFile "hn-landscape.pdf"
+Invoke-RestMethod -Uri "http://localhost:3000/api/v1" -Method POST -Body $body -ContentType "application/json" -OutFile "hn-landscape.pdf"
 ```
 
 ## Troubleshooting:

@@ -158,7 +158,7 @@ export async function GET() {
     ],
     usage: {
       method: 'POST',
-      endpoint: '/api/convert-vercel',
+      endpoint: '/api/v2',
       body: {
         html: 'Optional: HTML content as string (use either html or url)',
         url: 'Optional: Website URL to convert (use either html or url)', 
@@ -174,10 +174,10 @@ export async function GET() {
       },
       examples: {
         htmlConversion: {
-          curl: 'curl -X POST https://your-app.vercel.app/api/convert-vercel -H "Content-Type: application/json" -d \'{"html":"<h1>Hello World</h1>"}\' --output output.pdf'
+          curl: 'curl -X POST https://your-app.vercel.app/api/v2 -H "Content-Type: application/json" -d \'{"html":"<h1>Hello World</h1>"}\' --output output.pdf'
         },
         urlConversion: {
-          curl: 'curl -X POST https://your-app.vercel.app/api/convert-vercel -H "Content-Type: application/json" -d \'{"url":"https://example.com"}\' --output webpage.pdf'
+          curl: 'curl -X POST https://your-app.vercel.app/api/v2 -H "Content-Type: application/json" -d \'{"url":"https://example.com"}\' --output webpage.pdf'
         }
       }
     },

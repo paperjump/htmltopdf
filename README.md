@@ -14,10 +14,10 @@ A Next.js application that converts HTML content or web URLs to PDF files using 
 ## API Endpoints
 
 ### Local Development
-- `POST /api/convert` - Convert HTML or URL to PDF (Puppeteer)
+- `POST /api/v1` - Convert HTML or URL to PDF (Puppeteer)
 
 ### Production (Vercel)
-- `POST /api/convert-vercel` - Convert HTML or URL to PDF (@sparticuz/chromium)
+- `POST /api/v2` - Convert HTML or URL to PDF (@sparticuz/chromium)
 
 The frontend automatically switches between endpoints based on environment.
 
@@ -33,7 +33,7 @@ Visit the application URL and use the web form to:
 
 #### Convert HTML to PDF
 ```bash
-curl -X POST http://localhost:3000/api/convert \
+curl -X POST http://localhost:3000/api/v1 \
   -H "Content-Type: application/json" \
   -d '{"html":"<h1>Hello World</h1><p>This is a test PDF.</p>"}' \
   --output result.pdf
@@ -41,17 +41,17 @@ curl -X POST http://localhost:3000/api/convert \
 
 #### Convert URL to PDF
 ```bash
-curl -X POST http://localhost:3000/api/convert \
+curl -X POST http://localhost:3000/api/v1 \
   -H "Content-Type: application/json" \
   -d '{"url":"https://example.com"}' \
   --output webpage.pdf
 ```
 
 ### Production API (Vercel)
-Replace the endpoint with `/api/convert-vercel` when deployed:
+Replace the endpoint with `/api/v2` when deployed:
 
 ```bash
-curl -X POST https://your-app.vercel.app/api/convert-vercel \
+curl -X POST https://your-app.vercel.app/api/v2 \
   -H "Content-Type: application/json" \
   -d '{"html":"<h1>Hello World</h1>"}' \
   --output result.pdf
@@ -120,8 +120,8 @@ The API includes comprehensive error handling for:
 ## Development
 
 To add new features:
-1. Modify `app/api/convert/route.ts` for local development
-2. Update `app/api/convert-vercel/route.ts` for Vercel compatibility
+1. Modify `app/api/v1/route.ts` for local development
+2. Update `app/api/v2/route.ts` for Vercel compatibility
 3. Test both endpoints before deployment
 
 ## License
